@@ -498,7 +498,7 @@ async function setConfiguration(json, post = true, rebootDelayMs = -1) {
         console.log(JSON.stringify(config));
 
         if(post) {
-            success = postJson('/yoyo/config', config, 1000);
+            success = await postJson('/yoyo/config', config, 1000);
         }
 
         if(success) {
@@ -1386,7 +1386,7 @@ function getHost() {
 
         //Make sure this is an IP address (can be captive.apple.com etc):
         let ipAddress = host.split('.');
-        if(ipAddress.length == 4 && parseInt(ipAddress[0]) != NaN) {
+        if(ipAddress.length == 4 && !isNaN(parseInt(ipAddress[0]))) {
             //IP address looks OK
         }
         else {
