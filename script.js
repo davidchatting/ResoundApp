@@ -1,3 +1,4 @@
+let splide;
 let rebootTimeoutId = undefined;
 let saveConfigTimeOutId = undefined;
 let peerTimeOutId = {};
@@ -1230,7 +1231,7 @@ async function onServerSaveEvent(data) {
 async function fetchPeers() {
     try {
         let response = await fetchWithTimeout('/yoyo/peers', 1500);
-        if (!response.ok) throw new Error("Failed to fetch networks");
+        if (!response.ok) throw new Error("Failed to fetch peers");
 
         const json = await response.json();
         if (!Array.isArray(json) || json.length === 0) return [];
