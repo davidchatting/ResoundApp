@@ -224,7 +224,7 @@ async function initSphere() {
 
 function onKeyPressed(key, on) {
     if(getSlideId() === 'landing') {
-        const number = Number(event.key);
+        const number = Number(key);
         if (!isNaN(number)) {
             onUserClicked({track: number}, on);
         }
@@ -481,6 +481,18 @@ async function getConfiguration(timeoutMs = 5000, attempts = 5) {
     return false;
 }
 
+function deepMerge(target, source) {
+    const result = { ...target };
+    for (const key of Object.keys(source)) {
+        if (isPlainObject(source[key]) && isPlainObject(target[key])) {
+            result[key] = deepMerge(target[key], source[key]);
+        } else {
+            result[key] = source[key];
+        }
+    }
+    return result;
+}
+
 function isPlainObject(v) {
   return v !== null && typeof v === 'object' && !Array.isArray(v);
 }
@@ -494,7 +506,7 @@ async function setConfiguration(json, post = true, rebootDelayMs = -1) {
 
     if (isPlainObject(config) && !isEmptyObject(json)) {
         console.log("setConfiguration", json);
-        config = { ...config, ...json };
+        config = deepMerge(config, json);
 
         console.log(JSON.stringify(config));
 
