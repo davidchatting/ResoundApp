@@ -1367,7 +1367,7 @@ function parseLocalGestureMessage(json) {
     console.log('gesture', json);
 
     const type = json['t'];
-    if(type === 'clk' || type === 'anti') {
+    if(type === 'clck' || type === 'anti') {
         showSlideID('volume');
     }
 }
